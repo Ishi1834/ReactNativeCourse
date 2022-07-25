@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Alert } from "react-native";
 import Colors from "../utils/colors";
 import PrimaryButton from "../components/PrimaryButton";
@@ -17,13 +17,20 @@ function generateRandomBetween(min, max, exclude) {
 let minBoundary = 1;
 let maxBoundary = 100;
 
-export default function GameScreen({ userNumber }) {
+export default function GameScreen({ userNumber, handleGameOver }) {
   const initialGuess = generateRandomBetween(
     minBoundary,
     maxBoundary,
     userNumber
   );
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
+  const [numTries, setNumTries] = useState(0);
+
+  useEffect(() => {
+    if (userNumber === currentGuess) {
+      handleGameOver(numTries);
+    }
+  }, [currentGuess]);
 
   function nextGuessHandler(direction) {
     if (
@@ -45,6 +52,7 @@ export default function GameScreen({ userNumber }) {
       maxBoundary,
       currentGuess
     );
+    setNumTries(numTries + 1);
     setCurrentGuess(newRandomNumber);
   }
   return (
@@ -52,7 +60,7 @@ export default function GameScreen({ userNumber }) {
       <Title>Computers Guess</Title>
       <Text style={styles.number}>{currentGuess}</Text>
       <View>
-        <Text>Higher or lower</Text>
+        <Text style={styles.text}>Higher or lower</Text>
         <View>
           <PrimaryButton onPress={() => nextGuessHandler("higher")}>
             +
@@ -78,5 +86,12 @@ const styles = StyleSheet.create({
     padding: 12,
     borderBottomColor: Colors.secondary2,
     borderBottomWidth: 2,
+  },
+  text: {
+    fontSize: 14,
+    margin: 4,
+    padding: 4,
+    color: "white",
+    textAlign: "center",
   },
 });

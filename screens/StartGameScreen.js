@@ -2,6 +2,7 @@ import { useState } from "react";
 import { View, StyleSheet, TextInput, Alert } from "react-native";
 import Colors from "../utils/colors";
 import PrimaryButton from "../components/PrimaryButton";
+import Title from "../components/Title";
 
 export default function StartGameScreen({ onPickNumber }) {
   const [enteredNumber, setEnteredNumber] = useState("");
@@ -20,8 +21,10 @@ export default function StartGameScreen({ onPickNumber }) {
   }
   return (
     <View style={styles.inputContainer}>
+      <Title>Choose a number between 1 and 99</Title>
       <TextInput
         style={styles.numberInput}
+        placeholder="__"
         maxLength={2}
         keyboardType="number-pad"
         autoCorrect={false}
