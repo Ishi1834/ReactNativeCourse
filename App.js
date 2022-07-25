@@ -14,11 +14,11 @@ export default function App() {
 
   let screen = <StartGameScreen onPickNumber={pickedNumberHandler} />;
   if (userNumber) {
-    screen = <GameScreen />;
+    screen = <GameScreen userNumber={userNumber} />;
   }
   return (
     <LinearGradient
-      colors={[Colors.primary1, "yellow"]}
+      colors={[Colors.primary1, Colors.secondary1]}
       style={styles.container}
     >
       <ImageBackground
