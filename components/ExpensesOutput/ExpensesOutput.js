@@ -35,11 +35,11 @@ const DUMMY_EXPENSES = [
   },
 ];
 
-export default function ExpensesOutput({ expenses, periodName }) {
+export default function ExpensesOutput({ expenses, expensesPeriod }) {
   return (
     <View>
-      <ExpensesSummary expenses={DUMMY_EXPENSES} periodName={periodName} />
-      <ExpensesList />
+      <ExpensesSummary expenses={DUMMY_EXPENSES} periodName={expensesPeriod} />
+      <ExpensesList expenses={DUMMY_EXPENSES} />
     </View>
   );
 }

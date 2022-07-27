@@ -8,7 +8,7 @@ export default function ExpensesSummary({ periodName, expenses }) {
   return (
     <View>
       <Text>{periodName}</Text>
-      <Text>£{expensesSum.toFixed(2)}</Text> // round to 2 decimal places
+      <Text>£{expensesSum.toFixed(2)}</Text>
     </View>
   );
 }
