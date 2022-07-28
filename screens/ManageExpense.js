@@ -23,7 +23,7 @@ export default function ManageExpense({ route, navigation }) {
         <Button
           style={styles.button}
           mode="flat"
-          onPress={() => navigation.navigate("-1")}
+          onPress={() => navigation.goBack()}
         >
           Cancel
         </Button>
