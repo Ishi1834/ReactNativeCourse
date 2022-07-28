@@ -75,7 +75,7 @@ function ExpensesContextProvider({ children }) {
   }
 
   const value = {
-    expense: expensesState,
+    expenses: expensesState,
     addExpense: addExpense,
     deleteExpense: deleteExpense,
     updateExpense: updateExpense,
