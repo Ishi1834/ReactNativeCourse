@@ -1,5 +1,6 @@
 import { useContext, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
+import ExpenseForm from "../components/ManageExpense.js/ExpenseForm";
 import Button from "../components/UI/Button";
 import IconButton from "../components/UI/IconButton";
 import { GlobalStyles } from "../constants/style";
@@ -39,6 +40,7 @@ export default function ManageExpense({ route, navigation }) {
 
   return (
     <View style={styles.container}>
+      <ExpenseForm />
       <View style={styles.buttons}>
         <Button
           style={styles.button}
@@ -51,7 +53,7 @@ export default function ManageExpense({ route, navigation }) {
           {isEditing ? "Update" : "Add"}
         </Button>
       </View>
-      {isEditing ? (
+      {isEditing && (
         <View style={styles.deleteContainer}>
           <IconButton
             name="trash"
@@ -60,8 +62,6 @@ export default function ManageExpense({ route, navigation }) {
             onPress={deleteExpenseHandler}
           />
         </View>
-      ) : (
-        <Text>Add expense</Text>
       )}
     </View>
   );
