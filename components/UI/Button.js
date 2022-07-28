@@ -3,7 +3,7 @@ import { GlobalStyles } from "../../constants/style";
 
 export default function Button({ onPress, children, mode, style }) {
   return (
-    <View>
+    <View style={style}>
       <Pressable onPress={onPress}>
         <View style={[styles.button, mode === "flat" && styles.flat]}>
           <Text style={[styles.buttonText, mode === "flat" && styles.flat]}>
