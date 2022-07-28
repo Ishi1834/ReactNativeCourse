@@ -10,6 +10,10 @@ export default function ManageExpense({ route, navigation }) {
   const isEditing = !!editedExpenseId; // convert to  boolean
   const expenseContext = useContext(ExpensesContext);
 
+  const selectedExpense = expenseContext.expenses.find(
+    (expense) => expense.id === editedExpenseId
+  );
+
   useEffect(() => {
     navigation.setOptions({
       title: isEditing ? "Edit Expense" : "Add Expense",
@@ -26,8 +30,8 @@ export default function ManageExpense({ route, navigation }) {
       expenseContext.updateExpense(editedExpenseId, expenseData);
     } else {
       expenseContext.addExpense(expenseData);
-      navigation.goBack();
     }
+    navigation.goBack();
   }
 
   function handleCancel() {
@@ -40,6 +44,7 @@ export default function ManageExpense({ route, navigation }) {
         onCancel={handleCancel}
         isEditing={isEditing}
         onSubmit={handleSubmit}
+        initialExpense={selectedExpense}
       />
       {isEditing && (
         <View style={styles.deleteContainer}>

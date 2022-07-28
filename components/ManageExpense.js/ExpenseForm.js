@@ -3,11 +3,16 @@ import { View, Text, StyleSheet } from "react-native";
 import Input from "./Input";
 import Button from "../UI/Button";
 
-export default function ExpenseForm({ onCancel, isEditing, onSubmit }) {
+export default function ExpenseForm({
+  onCancel,
+  isEditing,
+  onSubmit,
+  initialExpense,
+}) {
   const [inputValues, setInputValues] = useState({
-    amount: "",
-    date: "",
-    description: "",
+    amount: initialExpense ? initialExpense.amount.toString() : "",
+    date: initialExpense ? initialExpense.date.toISOString().slice(0, 10) : "",
+    description: initialExpense ? initialExpense.description : "",
   });
 
   function handleInputChange(inputIdentifier, val) {
