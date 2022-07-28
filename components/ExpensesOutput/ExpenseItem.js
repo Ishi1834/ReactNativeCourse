@@ -1,13 +1,21 @@
 import { View, Text, Pressable, StyleSheet } from "react-native";
 import { GlobalStyles } from "../../constants/style";
 import { getFormattedDate } from "../../util/date";
+import { useNavigation } from "@react-navigation/native";
 /**
  * object not valid as react children
  * therefore transforming it into a string
  */
-export default function ExpenseItem({ description, amount, date }) {
+export default function ExpenseItem({ description, amount, date, id }) {
+  const navigation = useNavigation();
+  function handleEdit(id) {
+    navigation.navigate("ManageExpense");
+  }
   return (
-    <Pressable>
+    <Pressable
+      onPress={() => handleEdit(id)}
+      style={({ pressed }) => pressed && styles.pressed}
+    >
       <View style={styles.expenseItem}>
         <View>
           <Text style={[styles.textBase, styles.description]}>
@@ -60,5 +68,8 @@ const styles = StyleSheet.create({
     minWidth: 40,
     fontWeight: "bold",
     textAlign: "center",
+  },
+  pressed: {
+    opacity: 0.5,
   },
 });
