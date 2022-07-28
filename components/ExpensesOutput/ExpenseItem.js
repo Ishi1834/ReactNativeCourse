@@ -1,5 +1,6 @@
 import { View, Text, Pressable, StyleSheet } from "react-native";
 import { GlobalStyles } from "../../constants/style";
+import { getFormattedDate } from "../../util/data";
 /**
  * object not valid as react children
  * therefore transforming it into a string
@@ -12,7 +13,7 @@ export default function ExpenseItem({ description, amount, date }) {
           <Text style={[styles.textBase, styles.description]}>
             {description}
           </Text>
-          <Text style={styles.textBase}>{date.toString()}</Text>
+          <Text style={styles.textBase}>{getFormattedDate(date)}</Text>
         </View>
         <View style={styles.amountContainer}>
           <Text style={[styles.textBase, styles.amount]}>{amount}</Text>
