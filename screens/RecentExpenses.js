@@ -8,6 +8,10 @@ export default function RecentExpenses() {
 
   const recentExpenses = getRecentExpenses(expensesContext.expenses);
   return (
-    <ExpensesOutput expenses={recentExpenses} expensesPeriod="Last 7 days" />
+    <ExpensesOutput
+      expenses={recentExpenses}
+      expensesPeriod="Last 7 days"
+      fallBackText="No expenses in the last 7 days"
+    />
   );
 }
