@@ -1,7 +1,6 @@
 import { useContext, useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import ExpenseForm from "../components/ManageExpense.js/ExpenseForm";
-import Button from "../components/UI/Button";
 import IconButton from "../components/UI/IconButton";
 import { GlobalStyles } from "../constants/style";
 import { ExpensesContext } from "../store/expenses-context";
@@ -21,38 +20,27 @@ export default function ManageExpense({ route, navigation }) {
     expenseContext.deleteExpense(editedExpenseId);
     navigation.goBack();
   }
-  function handleConfirm() {
+
+  function handleSubmit(expenseData) {
     if (isEditing) {
-      expenseContext.updateExpense(editedExpenseId, {
-        description: "test update",
-        amount: 19.99,
-        date: new Date(),
-      });
+      expenseContext.updateExpense(editedExpenseId, expenseData);
     } else {
-      expenseContext.addExpense({
-        description: "test",
-        amount: 19.99,
-        date: new Date(),
-      });
+      expenseContext.addExpense(expenseData);
+      navigation.goBack();
     }
+  }
+
+  function handleCancel() {
     navigation.goBack();
   }
 
   return (
     <View style={styles.container}>
-      <ExpenseForm />
-      <View style={styles.buttons}>
-        <Button
-          style={styles.button}
-          mode="flat"
-          onPress={() => navigation.goBack()}
-        >
-          Cancel
-        </Button>
-        <Button style={styles.button} onPress={handleConfirm}>
-          {isEditing ? "Update" : "Add"}
-        </Button>
-      </View>
+      <ExpenseForm
+        onCancel={handleCancel}
+        isEditing={isEditing}
+        onSubmit={handleSubmit}
+      />
       {isEditing && (
         <View style={styles.deleteContainer}>
           <IconButton
@@ -78,15 +66,6 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     borderTopWidth: 2,
     borderTopColor: GlobalStyles.colors.primary200,
-    alignItems: "center",
-  },
-  button: {
-    minWidth: 120,
-    marginHorizontal: 8,
-  },
-  buttons: {
-    flexDirection: "row",
-    justifyContent: "center",
     alignItems: "center",
   },
 });

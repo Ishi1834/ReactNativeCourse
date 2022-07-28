@@ -1,9 +1,26 @@
+import { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Input from "./Input";
+import Button from "../UI/Button";
 
-export default function ExpenseForm() {
-  function handleInputChange(type, val) {
-    console.log(type, val);
+export default function ExpenseForm({ onCancel, isEditing, onSubmit }) {
+  const [inputValues, setInputValues] = useState({
+    amount: "",
+    date: "",
+    description: "",
+  });
+
+  function handleInputChange(inputIdentifier, val) {
+    setInputValues({ ...inputValues, [inputIdentifier]: val });
+  }
+
+  function handleSubmit() {
+    const expenseData = {
+      amount: +inputValues.amount, // converts to a number
+      date: new Date(inputValues.date),
+      description: inputValues.description,
+    };
+    onSubmit(expenseData);
   }
 
   return (
@@ -15,6 +32,7 @@ export default function ExpenseForm() {
           textInputConfig={{
             keyboardType: "decimal-pad",
             onChangeText: (val) => handleInputChange("amount", val),
+            value: inputValues.amount,
           }}
           style={styles.rowInput}
         />
@@ -24,6 +42,7 @@ export default function ExpenseForm() {
             onChangeText: (val) => handleInputChange("date", val),
             placeholder: "YYYY-MM-DD",
             maxLength: 10,
+            value: inputValues.date,
           }}
           style={styles.rowInput}
         />
@@ -34,9 +53,18 @@ export default function ExpenseForm() {
           onChangeText: (val) => handleInputChange("description", val),
           multiline: true,
           autoCapitalize: "sentences",
+          value: inputValues.description,
           //autoCorrect - default is true
         }}
       />
+      <View style={styles.buttons}>
+        <Button style={styles.button} mode="flat" onPress={onCancel}>
+          Cancel
+        </Button>
+        <Button style={styles.button} onPress={handleSubmit}>
+          {isEditing ? "Update" : "Add"}
+        </Button>
+      </View>
     </View>
   );
 }
@@ -58,5 +86,14 @@ const styles = StyleSheet.create({
   },
   rowInput: {
     flex: 1,
+  },
+  button: {
+    minWidth: 120,
+    marginHorizontal: 8,
+  },
+  buttons: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
