@@ -1,6 +1,6 @@
 import { View, Text, Pressable, StyleSheet } from "react-native";
 import { GlobalStyles } from "../../constants/style";
-import { getFormattedDate } from "../../util/data";
+import { getFormattedDate } from "../../util/date";
 /**
  * object not valid as react children
  * therefore transforming it into a string
@@ -55,5 +55,8 @@ const styles = StyleSheet.create({
   },
   amount: {
     color: GlobalStyles.colors.primary500,
+    minWidth: 40,
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });
