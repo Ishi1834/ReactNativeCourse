@@ -2,8 +2,10 @@ import axios from "axios";
 const baseURL =
   "https://rn-expense-tracker-18ec8-default-rtdb.europe-west1.firebasedatabase.app/";
 
-export function postExpense(expenseData) {
-  axios.post(`${baseURL}expenses.json`, expenseData);
+export async function postExpense(expenseData) {
+  const response = await axios.post(`${baseURL}expenses.json`, expenseData);
+  const id = response.data.name;
+  return id;
 }
 export async function getExpenses() {
   const response = await axios.get(`${baseURL}expenses.json`);
