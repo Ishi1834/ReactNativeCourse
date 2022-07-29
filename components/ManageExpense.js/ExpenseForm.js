@@ -2,6 +2,7 @@ import { useState } from "react";
 import { View, Text, StyleSheet, Alert } from "react-native";
 import Input from "./Input";
 import Button from "../UI/Button";
+import { GlobalStyles } from "../../constants/style";
 
 export default function ExpenseForm({
   onCancel,
@@ -12,17 +13,17 @@ export default function ExpenseForm({
   const [inputs, setInputs] = useState({
     amount: {
       value: initialExpense ? initialExpense.amount.toString() : "",
-      isValid: !!initialExpense,
+      isValid: true,
     },
     date: {
       value: initialExpense
         ? initialExpense.date.toISOString().slice(0, 10)
         : "",
-      isValid: !!initialExpense,
+      isValid: true,
     },
     description: {
       value: initialExpense ? initialExpense.description : "",
-      isValid: !!initialExpense,
+      isValid: true,
     },
   });
 
@@ -66,6 +67,7 @@ export default function ExpenseForm({
       <View style={styles.inputRow}>
         <Input
           label="Amount"
+          invalid={!inputs.amount.isValid}
           textInputConfig={{
             keyboardType: "decimal-pad",
             onChangeText: (val) => handleInputChange("amount", val),
@@ -75,6 +77,7 @@ export default function ExpenseForm({
         />
         <Input
           label="Date"
+          invalid={!inputs.date.isValid}
           textInputConfig={{
             onChangeText: (val) => handleInputChange("date", val),
             placeholder: "YYYY-MM-DD",
@@ -86,6 +89,7 @@ export default function ExpenseForm({
       </View>
       <Input
         label="Description"
+        invalid={!inputs.description.isValid}
         textInputConfig={{
           onChangeText: (val) => handleInputChange("description", val),
           multiline: true,
@@ -94,7 +98,7 @@ export default function ExpenseForm({
           //autoCorrect - default is true
         }}
       />
-      {formIsInvalid && <Text>Invalid inputs</Text>}
+      {formIsInvalid && <Text style={styles.errorText}>Invalid inputs</Text>}
       <View style={styles.buttons}>
         <Button style={styles.button} mode="flat" onPress={onCancel}>
           Cancel
@@ -133,5 +137,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+  },
+  errorText: {
+    textAlign: "center",
+    color: GlobalStyles.colors.error500,
+    margin: 8,
   },
 });
