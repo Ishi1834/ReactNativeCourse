@@ -26,12 +26,12 @@ export default function ManageExpense({ route, navigation }) {
     navigation.goBack();
   }
 
-  function handleSubmit(expenseData) {
+  async function handleSubmit(expenseData) {
     if (isEditing) {
       expenseContext.updateExpense(editedExpenseId, expenseData);
     } else {
-      postExpense(expenseData);
-      expenseContext.addExpense(expenseData);
+      const id = await postExpense(expenseData);
+      expenseContext.addExpense({ ...expenseData, id: id });
     }
     navigation.goBack();
   }
