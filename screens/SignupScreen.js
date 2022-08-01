@@ -19,9 +19,8 @@ function SignupScreen() {
         "Authentication failed!",
         "Could not create user, please check you input and try again later."
       );
+      setIsAuthenticating(false);
     }
-
-    setIsAuthenticating(false);
   }
   if (isAuthenticating) {
     return <LoadingOverlay message="Creating user..." />;
