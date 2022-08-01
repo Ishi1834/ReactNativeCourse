@@ -14,12 +14,10 @@ async function authenticate(mode, email, password) {
   return response;
 }
 
-export async function createUser(email, password) {
-  const response = await authenticate("signUp", email, password);
-  return response;
+export function createUser(email, password) {
+  return authenticate("signUp", email, password);
 }
 
-export async function loginUser(email, password) {
-  const response = await authenticate("signInWithPassword", email, password);
-  return response;
+export function loginUser(email, password) {
+  return authenticate("signInWithPassword", email, password);
 }
