@@ -17,7 +17,7 @@ export default function ImagePicker({ onTakeImage }) {
     if (cameraPermissionInformation.status === PermissionStatus.UNDETERMINED) {
       const permissionResponse = await requestPermission();
 
-      return permissionResponse;
+      return permissionResponse.granted;
     }
 
     if (cameraPermissionInformation.status === PermissionStatus.DENIED) {
@@ -33,9 +33,9 @@ export default function ImagePicker({ onTakeImage }) {
 
   async function takeImagehandler() {
     const hasPermission = await verifyPermissions();
-    if (!hasPermission) {
+    /* if (!hasPermission) {
       return;
-    }
+    } */
     const image = await launchCameraAsync({
       allowsEditing: true,
       aspect: [16, 9],
