@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { View, Text, Image, StyleSheet, Alert } from "react-native";
 import { Colors } from "../../constants/colors";
 import OutlinedButton from "../UI/OutlinedButton";
@@ -6,7 +7,7 @@ import {
   useForegroundPermissions,
   PermissionStatus,
 } from "expo-location";
-import { useEffect, useState } from "react";
+
 import { getAddress, getMapPreview } from "../../util/location";
 import {
   useNavigation,
@@ -44,11 +45,7 @@ export default function LocationPicker({ onPickLocation }) {
     }
 
     handleLocation();
-  }, [pickedLocation]);
-
-  useEffect(() => {
-    onPickLocation(pickedLocation);
-  }, [pickedLocation]);
+  }, [pickedLocation, onPickLocation]);
 
   async function verifyPermissions() {
     if (
@@ -56,7 +53,7 @@ export default function LocationPicker({ onPickLocation }) {
     ) {
       const permissionResponse = await requestPermission();
 
-      return permissionResponse;
+      return permissionResponse.granted;
     }
 
     if (locationPermissionInformation.status === PermissionStatus.DENIED) {
@@ -64,7 +61,9 @@ export default function LocationPicker({ onPickLocation }) {
         "Insufficient Permissions!",
         "You need to grant location permissions to use this app."
       );
-      return false;
+      const premissionRequest = await requestPermission();
+      const response = premissionRequest.granted;
+      return response;
     }
 
     return true;
@@ -72,7 +71,6 @@ export default function LocationPicker({ onPickLocation }) {
 
   async function getLocationHandler() {
     const hasPermission = await verifyPermissions();
-
     if (!hasPermission) {
       return;
     }
@@ -87,7 +85,8 @@ export default function LocationPicker({ onPickLocation }) {
     navigation.navigate("Map");
   }
 
-  let locationPreview = <Text>No location picked yet</Text>;
+  let locationPreview = <Text>No location picked yet.</Text>;
+
   if (pickedLocation) {
     locationPreview = (
       <Image
@@ -95,9 +94,11 @@ export default function LocationPicker({ onPickLocation }) {
         source={{
           uri: getMapPreview(pickedLocation.lat, pickedLocation.lng),
         }}
+        resizeMode="contain"
       />
     );
   }
+
   return (
     <View>
       <View style={styles.mapPreview}>{locationPreview}</View>
