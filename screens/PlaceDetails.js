@@ -3,7 +3,7 @@ import { View, Text, ScrollView, Image, StyleSheet } from "react-native";
 import OutlinedButton from "../components/UI/OutlinedButton";
 import { Colors } from "../constants/colors";
 
-export default function PlaceDetail({ route }) {
+export default function PlaceDetails({ route }) {
   const selectedPlaceId = route.params.PlaceDetail;
 
   useEffect(() => {}, [selectedPlaceId]);
