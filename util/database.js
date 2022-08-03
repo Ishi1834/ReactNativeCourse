@@ -12,7 +12,7 @@ export function init() {
       // tx is transaction object
       tx.executeSql(
         `CREATE TABLE IF NOT EXISTS places (
-      id INTERGER PRIMARY KEY NOT NULL,
+      id INTEGER PRIMARY KEY NOT NULL,
       title TEXT NOT NULL,
       imageUri TEXT NOT NULL,
       address TEXT NOT NULL,
@@ -38,19 +38,19 @@ export function insertPlace(place) {
   const promise = new Promise((resolve, reject) => {
     database.transaction((tx) => {
       tx.executeSql(
-        `INSERT INTO places (title, imageUri,address, lat, lng) VALUES (?, ?, ?, ?, ?)`,
+        `INSERT INTO places (title, imageUri, address, lat, lng) VALUES (?, ?, ?, ?, ?)`,
         [
           place.title,
           place.imageUri,
-          place.adress,
+          place.address,
           place.location.lat,
           place.location.lng,
         ],
         (_, result) => {
-          console.log(result);
+          resolve(result);
         },
         (_, error) => {
-          console.log(error);
+          reject(error);
         }
       );
     });
