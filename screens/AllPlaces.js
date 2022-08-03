@@ -14,7 +14,6 @@ export default function AllPlaces({ route }) {
 
     if (isFocussed) {
       loadedPlaces();
-      //setLoadedPlaces([...loadedPlaces, route.params.place]);
     }
   }, [isFocussed]);
   return <PlacesList places={loadedPlaces} />;
